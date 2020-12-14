@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using EcoGrpc.Client.Customer;
+using EcoSpider.Services;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Net.Client;
@@ -68,26 +69,38 @@ namespace EcoSpider.Client
             // Console.WriteLine(response);
             // =======================================
 
+            // var client = new Customer.CustomerClient(channel);
+            // using var call = client.GetCustomersBidirectional();
+            //
+            // var tarefa = Task.Run(async () =>
+            // {
+            //     await foreach (var response in call.ResponseStream.ReadAllAsync())
+            //     {
+            //         Console.WriteLine(response);
+            //     }
+            // });
+            //
+            // for (int i = 1; i < 4; i++)
+            // {
+            //     await call.RequestStream.WriteAsync(new CustomerLookUpModel(){Id = i});
+            //     await Task.Delay(TimeSpan.FromSeconds(2));
+            // }
+            //
+            // await call.RequestStream.CompleteAsync();
+            // await tarefa;
+            // Console.WriteLine("Tarefa Concluida!");
+
             var client = new Customer.CustomerClient(channel);
-            using var call = client.GetCustomersBidirectional();
-
-            var tarefa = Task.Run(async () =>
-            {
-                await foreach (var response in call.ResponseStream.ReadAllAsync())
+            var metadata = new Metadata() {new Metadata.Entry("user", "Yuri Difusor")};
+            var response = await client.InsertCustomerAsync(
+                new CustomerModel()
                 {
-                    Console.WriteLine(response);
-                }
-            });
-            
-            for (int i = 1; i < 4; i++)
-            {
-                await call.RequestStream.WriteAsync(new CustomerLookUpModel(){Id = i});
-                await Task.Delay(TimeSpan.FromSeconds(2));
-            }
-
-            await call.RequestStream.CompleteAsync();
-            await tarefa;
-            Console.WriteLine("Tarefa Concluida!");
+                    // Id = 1,
+                    Address = "lailuleilo",
+                    Name = "Mr Potato",
+                    EmailAddress = "ajhdjsa@gmail.com"
+                }, metadata);
+            Console.Write(response);
         }
     }
 }

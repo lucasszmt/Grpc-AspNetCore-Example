@@ -11,7 +11,7 @@ service Customer {
   rpc GetCustomers(google.protobuf.Empty) returns (stream CustomerModel);
   rpc GetCustomersFromClient(stream CustomerLookUpModel) returns (CustomerModel);
   rpc GetCustomersBidirectional(stream CustomerLookUpModel) returns (stream CustomerModel);
-
+  rpc InsertCustomer(CustomerModel) returns (StatusMessage);
 }
 
 message CustomerLookUpModel {
@@ -23,4 +23,8 @@ message CustomerModel {
   string name = 2;
   string emailAddress = 3;
   string address = 4;
+}
+
+message StatusMessage {
+  string message = 1;
 }

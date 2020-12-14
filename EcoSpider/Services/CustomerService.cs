@@ -7,16 +7,19 @@ using EcoGrpc.Customer;
 using EcoSpider.Repositories;
 using Google.Protobuf.WellKnownTypes;
 using System.Collections.Generic;
+using EcoSpider.Data;
 
 namespace EcoSpider.Services
 {
     public class CustomerService : Customer.CustomerBase
     {
         private CustomerRepository _customerRepository;
+        private DataContext _context;
 
-        public CustomerService()
+        public CustomerService(DataContext dataContext)
         {
             _customerRepository = new CustomerRepository();
+            _context = dataContext;
         }
 
         public override async Task<CustomerModel> GetCustomerByLookUp(CustomerLookUpModel request,
@@ -63,6 +66,26 @@ namespace EcoSpider.Services
                 var customer = customers.FirstOrDefault(cust => cust.Id == lookUpModel.Id);
                 Console.WriteLine($"Vindo da requisição talkey? : => {customer}");
                 await responseStream.WriteAsync(customer);
+            }
+        }
+
+        public override Task<StatusMessage> InsertCustomer(CustomerModel request, ServerCallContext context)
+        {
+            // Console.WriteLine(request);
+            try
+            {
+                Console.WriteLine($"OS CABEÇUDOOOOO ======D{context.RequestHeaders.Get("user")}");
+                _context.Customers.Add(request);
+                _context.SaveChanges();
+                return Task.FromResult(new StatusMessage()
+                {
+                    Message = $"deu certo => {context.UserState.ToString()}, Status Code {context.Status.StatusCode}"
+                });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
     }
