@@ -9,9 +9,9 @@ import "google/protobuf/empty.proto";
 service Customer {
   rpc GetCustomerByLookUp(CustomerLookUpModel) returns (CustomerModel);
   rpc GetCustomers(google.protobuf.Empty) returns (stream CustomerModel);
-  rpc GetCustomersFromClient(stream CustomerLookUpModel) returns (CustomerModel);
-  rpc GetCustomersBidirectional(stream CustomerLookUpModel) returns (stream CustomerModel);
   rpc InsertCustomer(CustomerModel) returns (StatusMessage);
+  rpc GetImage (RequestImage) returns (DataChunk);
+  rpc UploadImages (stream DataChunk) returns (StatusMessage);
 }
 
 message CustomerLookUpModel {
@@ -27,4 +27,12 @@ message CustomerModel {
 
 message StatusMessage {
   string message = 1;
+}
+
+message RequestImage {
+  string path = 1;
+}
+
+message DataChunk {
+  bytes data = 1;
 }

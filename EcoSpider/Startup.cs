@@ -19,7 +19,7 @@ namespace EcoSpider
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGrpc();
+            services.AddGrpc(op => op.MaxReceiveMessageSize = 10194304);
             services.AddDbContext<DataContext>(opt =>
                 opt.UseInMemoryDatabase("Database"));
             services.AddScoped<DataContext, DataContext>();
