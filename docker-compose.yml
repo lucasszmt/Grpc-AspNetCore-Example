@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+#  proxy:
+#    build:
+#      context: ./Docker/Nginx
+#    ports:
+#      # - "80:80"
+#      - "1443:1443"
+#    # restart: always
+#    networks:
+#      - default
+
+#  api:
+#    depends_on:
+#      - proxy
+#    build:
+#      context: ./EcoSpider.Grpc
+#    # ports: 
+#    #   - 15001:15001
+#    expose:
+#      - 80
+#    # environment:
+#    #   - ASPNETCORE_ENVIRONMENT=Development
+#    #   - ASPNETCORE_URLS=http://+:15001
+#    networks:
+#      - default
+
+  db:
+    image: postgres:alpine
+    restart: unless-stopped
+    ports:
+      - 8080:5432
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
