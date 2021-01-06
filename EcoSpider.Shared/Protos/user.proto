@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "EcoSpider.Shared.Grpc";
+
+service UserSvc {
+  rpc CreateUser (User) returns (google.protobuf.Empty);
+  rpc Authenticate (Login) returns (google.protobuf.Empty);
+}
+
+message User {
+  int32 id = 1;
+  string name = 2;
+  string username = 3;
+  string email = 4;
+  Role role = 5;
+}
+
+enum Role {
+  ADMIN = 0;
+  CLIENT = 1;
+  MANAGER = 2;
+}
+
+message Login {
+  string username = 1;
+  string password = 2;
+}

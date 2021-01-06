@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.32.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.1" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\EcoSpider.Shared\EcoSpider.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="../EcoSpider.Shared/Protos/customer.proto" GrpcServices="Server" />
+    </ItemGroup>
+    <ItemGroup>
+        <Protobuf Include="../EcoSpider.Shared/Protos/user.proto" GrpcServices="Server" />
+    </ItemGroup>
+    <ItemGroup>
+        <Protobuf Include="../EcoSpider.Shared/Protos/product.proto" GrpcServices="Server" />
+    </ItemGroup>
+
+</Project>

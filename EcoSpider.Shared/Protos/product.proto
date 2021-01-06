@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "EcoSpider.Shared.Grpc";
+
+service ProductSvc {
+  rpc GetProductById(ProductLookUp) returns (ProductData);
+  rpc GetProducts(google.protobuf.Empty) returns (stream ProductData);
+  rpc StoreProduct(ProductData) returns (ReturnMessage);
+  rpc StoreManyProducts(stream ProductData) returns (ReturnMessage);
+}
+
+message ProductLookUp
+{
+  int32 id = 1;
+}
+
+// Product data
+message ProductData {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+  bytes image = 4;
+  CategoryData category = 5;
+}
+
+// Category of the products
+message CategoryData {
+  int32 id = 1;
+  string name = 2;
+}
+
+message ReturnMessage {
+  bool success = 1;
+  string message = 2;
+}

@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.14.0"/>
+        <PackageReference Include="Grpc.Net.Client" Version="2.33.1"/>
+        <PackageReference Include="Grpc.Tools" Version="2.33.1">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="../EcoSpider.Shared/Protos/customer.proto" GrpcServices="Client"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Protobuf Include="../EcoSpider.Shared/Protos/user.proto" GrpcServices="Client"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Protobuf Include="../EcoSpider.Shared/Protos/product.proto" GrpcServices="Client"/>
+    </ItemGroup>
+
+</Project>

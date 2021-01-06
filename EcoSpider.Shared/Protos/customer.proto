@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "EcoSpider.Shared.Grpc";
+
+service Customer {
+  rpc GetCustomerInfo (CustomerLookUpModel) returns (CustomerModel);
+  rpc GetCustomers (google.protobuf.Empty) returns (stream CustomerModel);
+  rpc GetCustomersFromClient (stream CustomerModel) returns (google.protobuf.Empty);
+}
+
+message CustomerLookUpModel {
+  int32 id = 1;
+}
+
+message CustomerModel {
+  string firstName = 1;
+  string lastName = 2;
+  string emailAddress = 3;
+  bool isAlive = 4;
+  int32 age = 5;
+  string role = 6;
+}
