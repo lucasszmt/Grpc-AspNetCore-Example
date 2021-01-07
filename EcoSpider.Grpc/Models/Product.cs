@@ -6,7 +6,7 @@ namespace EcoSpider.Grpc.Models
 {
     public class Product : Base
     {
-        [Key] public int Id { get; set; }
+        [Key] public int Id { get; private set; }
         [Required] public string Name { get; set; }
         [Required] public string Description { get; set; }
 
@@ -19,10 +19,12 @@ namespace EcoSpider.Grpc.Models
         {
             Name = name;
             Description = description;
+            Price = price;
             Category = category;
             if (price < 0)
             {
-                _errors.Add("price", "O valor do preço não pode ser negativo!");
+                _errors.Add("Invalid Price", "The price value can't be negative!");
+                _errors.Add("Invalid Another teste", "The price value can't be negative!");
             }
         }
 

@@ -18,11 +18,12 @@ message ProductLookUp
 
 // Product data
 message ProductData {
-  string name = 1;
-  string description = 2;
-  double price = 3;
-  bytes image = 4;
-  CategoryData category = 5;
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  bytes image = 5;
+  CategoryData category = 6;
 }
 
 // Category of the products

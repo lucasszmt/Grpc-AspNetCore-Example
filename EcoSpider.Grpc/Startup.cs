@@ -62,7 +62,6 @@ namespace EcoSpider.Grpc
 
             app.UseEndpoints(endpoints =>
             {
-                // endpoints.MapGrpcService<CustomersService>();
                 endpoints.MapGrpcService<ProductsService>();
                 endpoints.MapGet("/",
                     async context =>

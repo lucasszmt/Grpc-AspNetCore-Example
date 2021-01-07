@@ -1,7 +1,9 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Grpc.Net.Client;
 using EcoSpider.Shared.Grpc;
+using Grpc.Core;
 
 namespace GrpcGreeterClient
 {
@@ -19,14 +21,23 @@ namespace GrpcGreeterClient
                 new GrpcChannelOptions() {HttpHandler = httpHandler});
 
             var client = new ProductSvc.ProductSvcClient(channel);
-
-            client.StoreProduct(new ProductData()
+            try
             {
-                Category = new CategoryData {Id = 1},
-                Name = "PS5",
-                Description = "Pleysteixon",
-                Price = 4500.20
-            });
+                var returnMessage = client.StoreProduct(new ProductData()
+                {
+                    Category = new CategoryData {Id = 1},
+                    Name = "PS5",
+                    Description = "Pleysteixon",
+                    Price = -4500.20
+                });
+                Console.Write(returnMessage);
+            }
+            catch (RpcException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
     }
 }

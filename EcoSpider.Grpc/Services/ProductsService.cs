@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EcoSpider.Grpc.Business;
 using EcoSpider.Grpc.Data;
 using EcoSpider.Shared.Grpc;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +30,8 @@ namespace EcoSpider.Grpc.Services
         {
             try
             {
+                _logger.LogInformation("Salvando Produto...");
+
                 await _productsBO.StoreProduct(request);
                 return new ReturnMessage()
                 {
@@ -36,9 +41,14 @@ namespace EcoSpider.Grpc.Services
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine(e);
-                throw;
+                _logger.LogError(e.Message);
+                throw new RpcException(new Status(StatusCode.InvalidArgument, e.Message));
             }
+        }
+
+        public override Task GetProducts(Empty request, IServerStreamWriter<ProductData> responseStream, ServerCallContext context)
+        {
+            throw new NotImplementedException("numplementei");
         }
     }
 }
